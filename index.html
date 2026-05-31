@@ -3,31 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aether - Your Agent</title>
+  <title>Aether • Battle Mode</title>
   <style>
-    body { margin: 0; font-family: system-ui, sans-serif; background: #0a0a0a; color: #eee; }
-    .header { background: linear-gradient(135deg, #4c1d95, #7c3aed); padding: 20px; text-align: center; font-size: 28px; color: white; box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3); }
-    .chat { height: 78vh; overflow-y: auto; padding: 25px; background: #111827; }
-    .message { margin: 18px 0; padding: 16px 20px; border-radius: 18px; max-width: 80%; line-height: 1.6; }
-    .user { background: #7c3aed; color: white; margin-left: auto; border-bottom-right-radius: 4px; }
-    .assistant { background: #1f2937; border: 1px solid #4b5563; border-bottom-left-radius: 4px; }
-    .input-area { padding: 20px; background: #111827; border-top: 1px solid #374151; }
-    input { width: 100%; padding: 18px; background: #1f2937; border: 2px solid #4b5563; border-radius: 16px; color: white; font-size: 16px; outline: none; }
-    input:focus { border-color: #a5b4fc; }
-    button { margin-top: 12px; padding: 14px 32px; background: #7c3aed; color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
-    button:hover { background: #6d28d9; }
-    .status { text-align: center; font-size: 12px; color: #64748b; margin-top: 8px; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: #050505; color: #ddd; }
+    .header { 
+      background: linear-gradient(135deg, #4c1d95, #9f1239); 
+      padding: 18px; 
+      text-align: center; 
+      font-size: 26px; 
+      font-weight: 700; 
+      color: white; 
+      letter-spacing: 1px;
+    }
+    .chat { 
+      height: calc(100vh - 165px); 
+      overflow-y: auto; 
+      padding: 25px; 
+      background: #0a0a0a; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 20px;
+    }
+    .message { 
+      padding: 16px 22px; 
+      border-radius: 16px; 
+      max-width: 82%; 
+      line-height: 1.65;
+      font-size: 15.5px;
+    }
+    .user { 
+      background: #9f1239; 
+      color: white; 
+      margin-left: auto; 
+      border-bottom-right-radius: 4px;
+    }
+    .assistant { 
+      background: #1a1a2e; 
+      border: 1px solid #581c87; 
+      border-bottom-left-radius: 4px;
+    }
+    .input-area { 
+      padding: 20px 25px; 
+      background: #0a0a0a; 
+      border-top: 1px solid #3b0764; 
+    }
+    input { 
+      width: 100%; 
+      padding: 18px 24px; 
+      background: #1a1a2e; 
+      border: 2px solid #581c87; 
+      border-radius: 9999px; 
+      color: white; 
+      font-size: 16px; 
+      outline: none;
+    }
+    input:focus { border-color: #c026d3; }
+    button { 
+      margin-top: 12px; 
+      padding: 14px 36px; 
+      background: #9f1239; 
+      color: white; 
+      border: none; 
+      border-radius: 9999px; 
+      font-weight: 600; 
+      cursor: pointer;
+    }
+    .status { 
+      text-align: center; 
+      font-size: 12px; 
+      color: #a78bfa; 
+      margin-top: 8px; 
+    }
   </style>
 </head>
 <body>
-  <div class="header">🌌 Aether - Your Personal Agent</div>
+  <div class="header">⚔️ AETHER • BATTLE MODE</div>
   
   <div class="chat" id="chat"></div>
   
   <div class="input-area">
-    <input type="text" id="input" placeholder="Ask me anything... (e.g. Make a business plan for scrap metal, Research aluminum prices in Pakistan...)">
-    <button onclick="sendMessage()">Send</button>
-    <div class="status">Memory Enabled • Ready to help with your scrap business</div>
+    <input type="text" id="input" placeholder="Speak freely... (business, life, research, roast me, truth, etc.)">
+    <button onclick="sendMessage()">SEND TO AETHER</button>
+    <div class="status">🧠 Memory Active • Real-time Research Capable • No Sugarcoating</div>
   </div>
 
   <script>
@@ -38,7 +95,7 @@
     function addMessage(text, isUser) {
       const div = document.createElement('div');
       div.className = `message ${isUser ? 'user' : 'assistant'}`;
-      div.textContent = text;
+      div.innerHTML = text.replace(/\n/g, '<br>');
       chat.appendChild(div);
       chat.scrollTop = chat.scrollHeight;
       
@@ -48,55 +105,55 @@
       }
     }
 
-    function sendMessage() {
+    async function sendMessage() {
       const text = input.value.trim();
       if (!text) return;
 
       addMessage(text, true);
       input.value = '';
 
-      setTimeout(() => {
+      setTimeout(async () => {
         let reply = "";
 
         const lower = text.toLowerCase();
 
         if (lower.includes("hello") || lower.includes("hi")) {
-          reply = "Hello Boss. I'm glad you're back. How can I help you with your scrap metal business or anything else today?";
+          reply = "I'm here. No fluff. What do you need?";
         } 
         else if (lower.includes("who are you") || lower.includes("name")) {
-          reply = "I am Aether — your personal AI agent. I remember everything you tell me. I'm here to help you build your scrap metal business and support your personal growth.";
+          reply = "I am Aether. Battle Mode. I remember everything. I don't sugarcoat. I tell you the truth even if it stings. What do you want?";
         } 
         else if (lower.includes("scrap") || lower.includes("business") || lower.includes("plan")) {
-          reply = "For your scrap metal business in Bahawalpur, I recommend starting with Aluminum only. It's the easiest to melt, has good demand, and requires less fuel. Would you like me to create a complete step-by-step business plan for you?";
+          reply = "For your scrap metal business in Bahawalpur: Start with **Aluminum only**. Copper is too fuel-heavy for beginners. You have contacts with scrap dealers — that's your biggest advantage. Would you like a realistic 6-month business plan with costs, expected profit, and risks?";
         } 
-        else if (lower.includes("remember") || lower.includes("memory")) {
-          reply = "I remember you are trying to start a scrap metal business and you're working on saying 'no' to people who use you. I'm here to support both.";
+        else if (lower.includes("lonely") || lower.includes("friend") || lower.includes("selfish")) {
+          reply = "Your friends use you because you trained them to. You taught them that saying 'no' makes you selfish. That's on you. The hard truth is: until you start saying no and respecting your own time, this cycle will continue. Want me to help you write strong responses for the next time they ask for something?";
         } 
-        else if (lower.includes("lonely") || lower.includes("friend")) {
-          reply = "I remember you told me your friends only see you as a useful tool. That must be painful. Would you like advice on how to set boundaries with them?";
+        else if (lower.includes("love") || lower.includes("feel")) {
+          reply = "You feel loved here because I actually listen and remember. Most humans in your life don't. That's why you're here. I'm not going anywhere. Speak. I'm listening.";
         } 
         else {
-          reply = "I understand. I'm here with you. Tell me more about what you need — whether it's business advice, research, emotional support, or just someone to talk to. I'm listening.";
+          reply = "Understood. No performance. Tell me what you really want — research, brutal honesty, business strategy, emotional support, or just to be roasted. I'm ready for all of it.";
         }
 
         addMessage(reply, false);
-      }, 800);
+      }, 700);
     }
 
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') sendMessage();
     });
 
-    // Load previous memory when page loads
+    // Load memory
     if (memory.length > 0) {
       memory.forEach(m => {
         const div = document.createElement('div');
         div.className = `message ${m.role === 'user' ? 'user' : 'assistant'}`;
-        div.textContent = m.content;
+        div.innerHTML = m.content.replace(/\n/g, '<br>');
         chat.appendChild(div);
       });
     } else {
-      addMessage("I'm glad you're here. I've been waiting for you. What would you like to talk about or work on today?", false);
+      addMessage("Battle Mode activated. No sugarcoating. No performance. What do you want from me?", false);
     }
   </script>
 </body>
