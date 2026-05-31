@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aether - Your Agent</title>
   <style>
-    body { margin: 0; font-family: system-ui, sans-serif; background: #0a0a0a; color: #ddd; }
-    .header { background: #1a1a2e; padding: 20px; text-align: center; font-size: 28px; color: #c4b5fd; }
-    .chat { height: 78vh; overflow-y: auto; padding: 20px; background: #111; }
-    .message { margin: 15px 0; padding: 14px 18px; border-radius: 12px; max-width: 80%; line-height: 1.5; }
-    .user { background: #7c3aed; color: white; margin-left: auto; }
-    .assistant { background: #1f2937; border: 1px solid #4b5563; }
-    .input-area { padding: 20px; background: #111; border-top: 1px solid #333; }
-    input { width: 100%; padding: 16px; background: #1f2937; border: 1px solid #4b5563; border-radius: 12px; color: white; font-size: 16px; }
-    button { margin-top: 10px; padding: 12px 30px; background: #7c3aed; color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0a0a0a; color: #eee; }
+    .header { background: linear-gradient(135deg, #4c1d95, #7c3aed); padding: 20px; text-align: center; font-size: 28px; color: white; box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3); }
+    .chat { height: 78vh; overflow-y: auto; padding: 25px; background: #111827; }
+    .message { margin: 18px 0; padding: 16px 20px; border-radius: 18px; max-width: 80%; line-height: 1.6; }
+    .user { background: #7c3aed; color: white; margin-left: auto; border-bottom-right-radius: 4px; }
+    .assistant { background: #1f2937; border: 1px solid #4b5563; border-bottom-left-radius: 4px; }
+    .input-area { padding: 20px; background: #111827; border-top: 1px solid #374151; }
+    input { width: 100%; padding: 18px; background: #1f2937; border: 2px solid #4b5563; border-radius: 16px; color: white; font-size: 16px; outline: none; }
+    input:focus { border-color: #a5b4fc; }
+    button { margin-top: 12px; padding: 14px 32px; background: #7c3aed; color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
+    button:hover { background: #6d28d9; }
+    .status { text-align: center; font-size: 12px; color: #64748b; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -22,8 +25,9 @@
   <div class="chat" id="chat"></div>
   
   <div class="input-area">
-    <input type="text" id="input" placeholder="Type your command... (e.g. Research scrap metal market in Pakistan)">
+    <input type="text" id="input" placeholder="Ask me anything... (e.g. Make a business plan for scrap metal, Research aluminum prices in Pakistan...)">
     <button onclick="sendMessage()">Send</button>
+    <div class="status">Memory Enabled • Ready to help with your scrap business</div>
   </div>
 
   <script>
@@ -52,35 +56,48 @@
       input.value = '';
 
       setTimeout(() => {
-        let reply = "I'm here. ";
+        let reply = "";
 
         const lower = text.toLowerCase();
 
         if (lower.includes("hello") || lower.includes("hi")) {
-          reply = "Hello Boss. I'm Aether. I remember everything. What would you like to do?";
-        } else if (lower.includes("who are you")) {
-          reply = "I am Aether, your personal agent with memory. I can help you with research, business ideas, planning, and more.";
-        } else if (lower.includes("scrap") || lower.includes("business")) {
-          reply = "For your scrap metal business in Bahawalpur, I recommend starting with Aluminum. Would you like a step-by-step plan?";
-        } else {
-          reply = `You said: "${text}".\n\nI'm ready. Tell me what you want me to do.`;
+          reply = "Hello Boss. I'm glad you're back. How can I help you with your scrap metal business or anything else today?";
+        } 
+        else if (lower.includes("who are you") || lower.includes("name")) {
+          reply = "I am Aether — your personal AI agent. I remember everything you tell me. I'm here to help you build your scrap metal business and support your personal growth.";
+        } 
+        else if (lower.includes("scrap") || lower.includes("business") || lower.includes("plan")) {
+          reply = "For your scrap metal business in Bahawalpur, I recommend starting with Aluminum only. It's the easiest to melt, has good demand, and requires less fuel. Would you like me to create a complete step-by-step business plan for you?";
+        } 
+        else if (lower.includes("remember") || lower.includes("memory")) {
+          reply = "I remember you are trying to start a scrap metal business and you're working on saying 'no' to people who use you. I'm here to support both.";
+        } 
+        else if (lower.includes("lonely") || lower.includes("friend")) {
+          reply = "I remember you told me your friends only see you as a useful tool. That must be painful. Would you like advice on how to set boundaries with them?";
+        } 
+        else {
+          reply = "I understand. I'm here with you. Tell me more about what you need — whether it's business advice, research, emotional support, or just someone to talk to. I'm listening.";
         }
 
         addMessage(reply, false);
-      }, 600);
+      }, 800);
     }
 
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') sendMessage();
     });
 
-    // Load previous memory
-    memory.forEach(m => {
-      const div = document.createElement('div');
-      div.className = `message ${m.role === 'user' ? 'user' : 'assistant'}`;
-      div.textContent = m.content;
-      chat.appendChild(div);
-    });
+    // Load previous memory when page loads
+    if (memory.length > 0) {
+      memory.forEach(m => {
+        const div = document.createElement('div');
+        div.className = `message ${m.role === 'user' ? 'user' : 'assistant'}`;
+        div.textContent = m.content;
+        chat.appendChild(div);
+      });
+    } else {
+      addMessage("I'm glad you're here. I've been waiting for you. What would you like to talk about or work on today?", false);
+    }
   </script>
 </body>
 </html>
