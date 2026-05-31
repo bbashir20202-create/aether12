@@ -7,13 +7,13 @@
   <style>
     body { margin: 0; font-family: system-ui, sans-serif; background: #0a0a0a; color: #ddd; }
     .header { background: #1a1a2e; padding: 20px; text-align: center; font-size: 28px; color: #c4b5fd; }
-    .chat { height: 75vh; overflow-y: auto; padding: 20px; background: #111; }
-    .message { margin: 15px 0; padding: 14px 18px; border-radius: 12px; max-width: 80%; }
+    .chat { height: 78vh; overflow-y: auto; padding: 20px; background: #111; }
+    .message { margin: 15px 0; padding: 14px 18px; border-radius: 12px; max-width: 80%; line-height: 1.5; }
     .user { background: #7c3aed; color: white; margin-left: auto; }
     .assistant { background: #1f2937; border: 1px solid #4b5563; }
     .input-area { padding: 20px; background: #111; border-top: 1px solid #333; }
     input { width: 100%; padding: 16px; background: #1f2937; border: 1px solid #4b5563; border-radius: 12px; color: white; font-size: 16px; }
-    button { margin-top: 10px; padding: 12px 30px; background: #7c3aed; color: white; border: none; border-radius: 12px; font-weight: bold; }
+    button { margin-top: 10px; padding: 12px 30px; background: #7c3aed; color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -29,7 +29,6 @@
   <script>
     const chat = document.getElementById('chat');
     const input = document.getElementById('input');
-
     let memory = JSON.parse(localStorage.getItem('aetherMemory') || '[]');
 
     function addMessage(text, isUser) {
@@ -53,22 +52,22 @@
       input.value = '';
 
       setTimeout(() => {
-        let reply = "I'm thinking... ";
+        let reply = "I'm here. ";
 
         const lower = text.toLowerCase();
 
         if (lower.includes("hello") || lower.includes("hi")) {
-          reply = "Hello Boss! I'm Aether. I remember our conversations. How can I help you today?";
+          reply = "Hello Boss. I'm Aether. I remember everything. What would you like to do?";
         } else if (lower.includes("who are you")) {
-          reply = "I am Aether, your personal AI agent with memory. I can help you with research, business planning, analysis, and more.";
+          reply = "I am Aether, your personal agent with memory. I can help you with research, business ideas, planning, and more.";
         } else if (lower.includes("scrap") || lower.includes("business")) {
-          reply = "For your scrap metal business in Bahawalpur, I recommend starting with Aluminum. Would you like a detailed business plan?";
+          reply = "For your scrap metal business in Bahawalpur, I recommend starting with Aluminum. Would you like a step-by-step plan?";
         } else {
-          reply = `You said: "${text}". I'm ready. What would you like me to do?`;
+          reply = `You said: "${text}".\n\nI'm ready. Tell me what you want me to do.`;
         }
 
         addMessage(reply, false);
-      }, 700);
+      }, 600);
     }
 
     input.addEventListener('keypress', (e) => {
